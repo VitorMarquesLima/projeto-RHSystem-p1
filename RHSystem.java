@@ -38,16 +38,27 @@ class Funcionario {
 }
 
 public class RHSystem {
+    private static final Scanner scanner = new Scanner(System.in);
     static ArrayList<Funcionario> funcionarios = new ArrayList<>();
 
     public static void adicionarFuncionario() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Digite o nome do funcionário: ");
         String nome = scanner.nextLine();
+
         System.out.print("Digite o cargo do funcionário: ");
         String cargo = scanner.nextLine();
-        System.out.print("Digite o salário do funcionário: ");
-        double salario = scanner.nextDouble();
+
+        double salario;
+        while (true) {
+            System.out.print("Digite o salário do funcionário: ");
+            if (scanner.hasNextDouble()) {
+                salario = scanner.nextDouble();
+                break;
+            } else {
+                System.out.println("Por favor, insira um valor numérico para o salário.");
+                scanner.next();
+            }
+        }
 
         funcionarios.add(new Funcionario(nome, cargo, salario));
         System.out.println("Funcionário adicionado com sucesso.");
@@ -60,54 +71,68 @@ public class RHSystem {
             System.out.println("Lista de funcionários:");
             for (int i = 0; i < funcionarios.size(); i++) {
                 Funcionario funcionario = funcionarios.get(i);
-                System.out.println((i + 1) + ". Nome: " + funcionario.nome + ", Cargo: " + funcionario.cargo + ", Salário: R$" + funcionario.salario + ", Status: " + funcionario.getStatusFerias());
+                System.out.println((i + 1) + ". Nome: " + funcionario.nome + ", Cargo: " + funcionario.cargo
+                        + ", Salário: R$" + funcionario.salario + ", Status: " + funcionario.getStatusFerias());
             }
         }
     }
 
     public static void menu() {
-        System.out.println("\n### Sistema de Recursos Humanos ###");
-        System.out.println("1. Adicionar funcionário");
-        System.out.println("2. Listar funcionários");
-        System.out.println("3. Solicitar férias");
-        System.out.println("4. Retornar ao trabalho");
-        System.out.println("5. Sair do sistema");
+        System.out.println("                                       ");
+        System.out.println("█ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █");
+        System.out.println("█                                     █");
+        System.out.println("█    !Sistema de Recursos Humanos!    █");
+        System.out.println("█                                     █");
+        System.out.println("█     1. Admitir Funcionário          █");
+        System.out.println("█     2. Listar funcionários          █");
+        System.out.println("█     3. Solicitar férias             █");
+        System.out.println("█     4. Retornar ao trabalho         █");
+        System.out.println("█     5. Demitir Funcionário          █");
+        System.out.println("█     6. Sair do Sistema              █");
+        System.out.println("█                                     █");
+        System.out.println("█    !Sistema de Recursos Humanos!    █");
+        System.out.println("█                                     █");
+        System.out.println("█ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █");
+        System.out.println("                                       ");
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
         while (true) {
             menu();
-            System.out.print("Digite o número da opção desejada: ");
-            int escolha = scanner.nextInt();
+            System.out.print("                                   \n" +
+                    "Digite o número da opção desejada:  ");
+            String escolha = scanner.nextLine();
 
             switch (escolha) {
-                case 1:
+                case "1":
                     adicionarFuncionario();
                     break;
-                case 2:
+                case "2":
                     listarFuncionarios();
                     break;
-                case 3:
+                case "3":
                     solicitarFerias();
                     break;
-                case 4:
+                case "4":
                     retornarAoTrabalho();
                     break;
-                case 5:
-                    System.out.println("Saindo do sistema...");
+                case "5":
+                    System.out.println("Saindo do sistema...\n" +
+                            "                      ");
                     System.exit(0);
                     break;
+                //case "6":
+                    //DemitirFuncionario();
+                    //break;
                 default:
-                    System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
+                    System.out.println("Opção inválida. Por favor, escolha uma opção válida.\n" +
+                            "                                                     ");
                     break;
             }
         }
     }
 
     public static void solicitarFerias() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Digite o número do funcionário que deseja solicitar férias: ");
         int index = scanner.nextInt();
         if (index >= 1 && index <= funcionarios.size()) {
@@ -118,7 +143,6 @@ public class RHSystem {
     }
 
     public static void retornarAoTrabalho() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Digite o número do funcionário que deseja retornar ao trabalho: ");
         int index = scanner.nextInt();
         if (index >= 1 && index <= funcionarios.size()) {
@@ -128,3 +152,14 @@ public class RHSystem {
         }
     }
 }
+
+
+    /*public static void DemitirFuncionario(){
+        System.out.println("Digite o número do funcionário que deseja desligar: ");
+        String index = scanner.nextLine();
+        if(index <= 0 && index < funcionarios.size()){
+            funcionarios.remove(index);
+            System.out.println("Funcionário desligado com sucesso.");
+        } else {System.out.println("Funcionário invalido, selecione outro número.");}
+
+    }*/
