@@ -35,10 +35,13 @@ public class RHSystem {
                 case "7":
                     System.out.println("Saindo do sistema...");
                     System.exit(0);
+                    break; 
+                case "8":
+                    MenuFuncionario.Employee();
                     break;
                 default:
                     System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
-                    break;
+                    break;  
             }
         }
     }
@@ -50,13 +53,10 @@ public class RHSystem {
         System.out.println("█                                       █");
         System.out.println("█    !Sistema de Recursos Humanos!      █");
         System.out.println("█                                       █");
-        System.out.println("█     1. Admitir Funcionário            █");
-        System.out.println("█     2. Listar funcionários            █");
-        System.out.println("█     3. Solicitar férias               █");
-        System.out.println("█     4. Retornar ao trabalho           █");
-        System.out.println("█     5. Demitir Funcionário            █");
-        System.out.println("█     6. Listar funcionários demitidos  █");
-        System.out.println("█     7. Sair do Sistema                █");
+        System.out.println("█     1. Funcionarios                   █");
+        System.out.println("█     2. Folha de pagamento             █");
+        System.out.println("█     3. Demitir Funcionário            █");
+        System.out.println("█     4. Sair do Sistema                █");
         System.out.println("█                                       █");
         System.out.println("█    !Sistema de Recursos Humanos!      █");
         System.out.println("█                                       █");
