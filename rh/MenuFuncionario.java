@@ -14,16 +14,16 @@ public class MenuFuncionario {
         System.out.println("█     1. Admitir Funcionário            █");
         System.out.println("█     2. Listar funcionários            █");
         System.out.println("█     3. Pedir ferias                   █");
-        System.out.println("█     3. Voltar de ferias               █");
-        System.out.println("█     4. Voltar                         █");
+        System.out.println("█     4. Voltar de ferias               █");
+        System.out.println("█     5. Voltar                         █");
         System.out.println("█                                       █");
-        System.out.println("█    !Sistema de Recursos Humanos!      █");
+        System.out.println("█             !Funcionarios!            █");
         System.out.println("█                                       █");
         System.out.println("█████████████████████████████████████████");
         System.out.println("                                       ");  
 
         
-        String menuFuncionario  = scanner.nextLine();
+        String menuFuncionario  = lerDados.lerTexto("Tente novamente");
 
         switch (menuFuncionario){
             case "1":
@@ -34,8 +34,16 @@ public class MenuFuncionario {
             break;
             case "3":
             RHSystemUtils.solicitarFerias();
-            case "4": 
+            break;
+            case "4":
+            RHSystemUtils.retornarAoTrabalho();
+            break;
+            case "5": 
             RHSystem.menu();
+            break;
+            default:
+            System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
+            break;  
         }
     }
 }

@@ -11,34 +11,24 @@ public class RHSystem {
         while (true) {
             menu();
             System.out.print("Digite o número da opção desejada: ");
-            String escolha = scanner.nextLine();
+            String escolha = lerDados.lerTexto("Tente novamente");
 
             switch (escolha) {
+
                 case "1":
-                    RHSystemUtils.adicionarFuncionario();
-                    break;
+                    MenuFuncionario.Employee();
+                    break; 
                 case "2":
-                    RHSystemUtils.listarFuncionarios();
+                    RHSystemUtils.FolhaDePagamentos();
                     break;
                 case "3":
-                    RHSystemUtils.solicitarFerias();
-                    break;
-                case "4":
-                    RHSystemUtils.retornarAoTrabalho();
-                    break;
-                case "5":
-                    RHSystemUtils.demitirFuncionario();
-                    break;
-                case "6":
-                    RHSystemUtils.listarFuncionariosDemitidos();
-                    break;
-                case "7":
-                    System.out.println("Saindo do sistema...");
-                    System.exit(0);
+                    MenuDemissão.MenuDE();
                     break; 
-                case "8":
-                    MenuFuncionario.Employee();
+                case "4":
+                    System.out.println("Saindo do sistema...");
+                    System.exit(0); 
                     break;
+
                 default:
                     System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
                     break;  

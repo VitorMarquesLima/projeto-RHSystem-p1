@@ -7,19 +7,18 @@ public class RHSystemUtils {
     private static final Scanner scanner = new Scanner(System.in);
     private static ArrayList<Funcionario> funcionariosDemitidos = new ArrayList<>();
 
-    // Método para adicionar um novo funcionário ao sistema.
     public static void adicionarFuncionario() {
         System.out.print("Digite o nome do funcionário: ");
-        String nome = scanner.nextLine();
+        String nome = lerDados.lerTexto("Tente novamente");
 
         System.out.print("Digite o cargo do funcionário: ");
-        String cargo = scanner.nextLine();
+        String cargo = lerDados.lerTexto("Tente novamente");
 
         double salario;
         while (true) {
             System.out.print("Digite o salário do funcionário: ");
             if (scanner.hasNextDouble()) {
-                salario = scanner.nextDouble();
+                salario = lerDados.lerDouble("Por favor, insira um valor numérico para o salário.");
                 break;
             } else {
                 System.out.println("Por favor, insira um valor numérico para o salário.");
@@ -48,7 +47,7 @@ public class RHSystemUtils {
     // Método para solicitar férias para um funcionário específico.
     public static void solicitarFerias() {
         System.out.print("Digite o número do funcionário que deseja solicitar férias: ");
-        int index = scanner.nextInt();
+        int index = lerDados.lerInt("insira um numero valido");
         if (index >= 1 && index <= RHSystem.funcionarios.size()) {
             RHSystem.funcionarios.get(index - 1).solicitarFerias();
         } else {
@@ -59,7 +58,7 @@ public class RHSystemUtils {
     // Método para retornar ao trabalho um funcionário que estava de férias.
     public static void retornarAoTrabalho() {
         System.out.print("Digite o número do funcionário que deseja retornar ao trabalho: ");
-        int index = scanner.nextInt();
+        int index =  lerDados.lerInt("insira um numero valido");
         if (index >= 1 && index <= RHSystem.funcionarios.size()) {
             RHSystem.funcionarios.get(index - 1).retornarAoTrabalho();
         } else {
@@ -77,7 +76,7 @@ public class RHSystemUtils {
 
         // Loop para garantir uma entrada válida
         System.out.print("Digite o número do funcionario que deseja demitir: ");
-        input = scanner.nextLine();
+        input = lerDados.lerTexto("tente novamente");
 
         // Verifica se a entrada é um número válido
         if (!input.trim().isEmpty() && input.matches("\\d+")) {
@@ -102,8 +101,29 @@ public class RHSystemUtils {
             for (int i = 0; i < funcionariosDemitidos.size(); i++) {
                 Funcionario funcionario = funcionariosDemitidos.get(i);
                 System.out.println((i + 1) + ". NOME: " + funcionario.nome + ", CARGO: " + funcionario.cargo
-                        + ", Salario: R$" + funcionario.salario + ", Status: " + funcionario.getStatusFerias());
+                        + ", Salario: R$" + funcionario.salario + ", Status: Demitido");
             }
         }
+    }
+
+    public static void FolhaDePagamentos() {
+
+        double custoTotal = 0.0;
+
+        if (RHSystem.funcionarios.isEmpty()) {
+            System.out.println("Não há funcionários cadastrados.");
+        } else {
+            System.out.println("O custo da folha de pagamento é: ");
+            for (int i = 0; i < RHSystem.funcionarios.size(); i++) {
+                Funcionario funcionario = RHSystem.funcionarios.get(i);
+                System.out.println((i + 1) + " Nome: " + funcionario.nome + ", Salário: R$" + funcionario.salario);
+
+                custoTotal += funcionario.salario;
+            }
+
+            System.out.println("o custo da folha de pagamento é: " + custoTotal );
+            
+        }
+        return;
     }
 }
