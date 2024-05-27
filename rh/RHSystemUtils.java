@@ -1,97 +1,95 @@
 package rh;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
 
 public class RHSystemUtils {
-    private static final Scanner scanner = new Scanner(System.in);
-    private static ArrayList<Funcionario> funcionariosDemitidos = new ArrayList<>();
+    private static void salvarFuncionariosNoArquivo(List<Funcionario> todos) {
+        Funcionario.salvarTudo(todos);
+    }
 
-    // Método para adicionar um novo funcionário ao sistema.
+    private static List<Funcionario> listarFuncionariosDoArquivo() {
+        return Funcionario.lerTudo();
+    }
+
+    //private static ArrayList<Funcionario> funcionariosDemitidos = new ArrayList<>(); //deletar para evitar problemas na hora de salvar
+
     public static void adicionarFuncionario() {
         System.out.print("Digite o nome do funcionário: ");
-        String nome = scanner.nextLine();
+        String nome = lerDados.lerTexto("Tente novamente");
 
         System.out.print("Digite o cargo do funcionário: ");
-        String cargo = scanner.nextLine();
+        String cargo = lerDados.lerTexto("Tente novamente");
 
-        double salario;
-        while (true) {
-            System.out.print("Digite o salário do funcionário: ");
-            if (scanner.hasNextDouble()) {
-                salario = scanner.nextDouble();
-                break;
-            } else {
-                System.out.println("Por favor, insira um valor numérico para o salário.");
-                scanner.next();
-            }
-        }
+        System.out.print("Digite o salário do funcionário: ");
+        var salario = lerDados.lerDouble("Por favor, insira um valor numérico para o salário.");
 
-        RHSystem.funcionarios.add(new Funcionario(nome, cargo, salario));
+        var todoMundo = listarFuncionariosDoArquivo();
+        todoMundo.add(new Funcionario(nome, cargo, salario, Funcionario.TRABALHANDO));
         System.out.println("Funcionário adicionado com sucesso.");
+        salvarFuncionariosNoArquivo(todoMundo);
     }
 
     // Método para listar todos os funcionários cadastrados no sistema.
     public static void listarFuncionarios() {
-        if (RHSystem.funcionarios.isEmpty()) {
+        var todoMundo = listarFuncionariosDoArquivo();
+        if (todoMundo.isEmpty()) {
             System.out.println("Não há funcionários cadastrados.");
         } else {
             System.out.println("Lista de funcionários:");
-            for (int i = 0; i < RHSystem.funcionarios.size(); i++) {
-                Funcionario funcionario = RHSystem.funcionarios.get(i);
+            int i = 0;
+            for (Funcionario funcionario : todoMundo) {
                 System.out.println((i + 1) + ". Nome: " + funcionario.nome + ", Cargo: " + funcionario.cargo
-                        + ", Salário: R$" + funcionario.salario + ", Status: " + funcionario.getStatusFerias());
+                        + ", Salário: R$" + funcionario.salario + ", Status: " + funcionario.situacao);
+                i++;
             }
         }
     }
 
     // Método para solicitar férias para um funcionário específico.
     public static void solicitarFerias() {
+        var todoMundo = listarFuncionariosDoArquivo();
         System.out.print("Digite o número do funcionário que deseja solicitar férias: ");
-        int index = scanner.nextInt();
-        if (index >= 1 && index <= RHSystem.funcionarios.size()) {
-            RHSystem.funcionarios.get(index - 1).solicitarFerias();
+        int index = lerDados.lerInt("insira um numero valido");
+        if (index >= 1 && index <= todoMundo.size()) {
+            todoMundo.get(index - 1).solicitarFerias();
         } else {
             System.out.println("Funcionário não encontrado.");
         }
+        salvarFuncionariosNoArquivo(todoMundo);
     }
 
     // Método para retornar ao trabalho um funcionário que estava de férias.
-    public static void retornarAoTrabalho() {
-        System.out.print("Digite o número do funcionário que deseja retornar ao trabalho: ");
-        int index = scanner.nextInt();
-        if (index >= 1 && index <= RHSystem.funcionarios.size()) {
-            RHSystem.funcionarios.get(index - 1).retornarAoTrabalho();
-        } else {
-            System.out.println("Funcionário não encontrado.");
-        }
-    }
 
-    // Método para demitir um funcionário.
+
+    /* // Método para demitir um funcionário.
     public static void demitirFuncionario() {
-        if (RHSystem.funcionarios.isEmpty()) {
+        var todoMundo = listarFuncionariosDoArquivo();
+        if (todoMundo.isEmpty()) {
             System.out.println("Não há funcionários cadastrados para demitir.");
+            return;
         }
-
-        String input;
 
         // Loop para garantir uma entrada válida
         System.out.print("Digite o número do funcionario que deseja demitir: ");
-        input = scanner.nextLine();
+        String input = lerDados.lerTexto("tente novamente");
 
         // Verifica se a entrada é um número válido
-        if (!input.trim().isEmpty() && input.matches("\\d+")) {
-            int index = Integer.parseInt(input);
-
-            // Verifica se o número do funcionário está dentro do intervalo válido
-            if (index >= 1 && index <= RHSystem.funcionarios.size()) {
-                // Demite o funcionário
-                Funcionario demitido = RHSystem.funcionarios.remove(index - 1);
-                funcionariosDemitidos.add(demitido);
-                System.out.println("Funcionário demitido com sucesso.");
-                return;
-            }
+        if (input.trim().isEmpty() && input.matches("\\d+")) {
+            return;
         }
+        int index = Integer.parseInt(input);
+
+        // Verifica se o número do funcionário está dentro do intervalo válido
+        if (index < 1 || index > todoMundo.size()) {
+            return;
+        }
+
+        // Demite o funcionário
+        Funcionario demitido = todoMundo.remove(index - 1);
+        funcionariosDemitidos.add(demitido);
+        System.out.println("Funcionário demitido com sucesso.");
+        salvarFuncionariosNoArquivo(todoMundo);
     }
 
     public static void listarFuncionariosDemitidos() {
@@ -102,8 +100,63 @@ public class RHSystemUtils {
             for (int i = 0; i < funcionariosDemitidos.size(); i++) {
                 Funcionario funcionario = funcionariosDemitidos.get(i);
                 System.out.println((i + 1) + ". NOME: " + funcionario.nome + ", CARGO: " + funcionario.cargo
-                        + ", Salario: R$" + funcionario.salario + ", Status: " + funcionario.getStatusFerias());
+                        + ", Salario: R$" + funcionario.salario + ", Status: Demitido");
             }
+        } \*
+    } */
+
+    public static void FolhaDePagamentos() {
+        var todoMundo = listarFuncionariosDoArquivo();
+
+        double custoTotal = 0.0;
+
+        if (todoMundo.isEmpty()) {
+            System.out.println("Não há funcionários cadastrados.");
+        } else {
+            System.out.println("O custo da folha de pagamento é: ");
+            for (int i = 0; i < todoMundo.size(); i++) {
+                Funcionario funcionario = todoMundo.get(i);
+                System.out.println((i + 1) + " Nome: " + funcionario.nome + ", Salário: R$" + funcionario.salario);
+
+                custoTotal += funcionario.salario;
+            }
+
+            System.out.println("o custo da folha de pagamento é: " + custoTotal );
+            
         }
+        return;
+    }
+    public static void demitirfuncionario() {
+        var todoMundo = listarFuncionariosDoArquivo();
+        System.out.print("Digite o número do funcionário que deseja demitir: ");
+        int index = lerDados.lerInt("insira um numero valido");
+        if (index >= 1 && index <= todoMundo.size()) {
+            todoMundo.get(index - 1).demitir();
+        } else {
+            System.out.println("Funcionário não encontrado.");
+        }
+        salvarFuncionariosNoArquivo(todoMundo);
+    }
+    public static void readmitirfuncionario() {
+        var todoMundo = listarFuncionariosDoArquivo();
+        System.out.print("Digite o número do funcionário que deseja solicitar férias: ");
+        int index = lerDados.lerInt("insira um numero valido");
+        if (index >= 1 && index <= todoMundo.size()) {
+            todoMundo.get(index - 1).readmitir();
+        } else {
+            System.out.println("Funcionário não encontrado.");
+        }
+        salvarFuncionariosNoArquivo(todoMundo);
+    }
+    public static void retornarAoTrabalho() {
+        var todoMundo = listarFuncionariosDoArquivo();
+        System.out.print("Digite o número do funcionário que deseja retornar ao trabalho: ");
+        int index =  lerDados.lerInt("insira um numero valido");
+        if (index >= 1 && index <= todoMundo.size()) {
+            todoMundo.get(index - 1).retornarAoTrabalho();
+        } else {
+            System.out.println("Funcionário não encontrado.");
+        }
+        salvarFuncionariosNoArquivo(todoMundo);
     }
 }

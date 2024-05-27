@@ -1,44 +1,39 @@
 package rh;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class RHSystem {
+
     private static final Scanner scanner = new Scanner(System.in);
-    static java.util.ArrayList<Funcionario> funcionarios = new java.util.ArrayList<>();
 
     // Método principal que controla a execução do sistema.
     public static void main(String[] args) {
         while (true) {
             menu();
             System.out.print("Digite o número da opção desejada: ");
-            String escolha = scanner.nextLine();
+            String escolha = lerDados.lerTexto("Tente novamente");
 
             switch (escolha) {
+
                 case "1":
-                    RHSystemUtils.adicionarFuncionario();
-                    break;
+                    MenuFuncionario.Employee();
+                    break; 
                 case "2":
-                    RHSystemUtils.listarFuncionarios();
+                    RHSystemUtils.FolhaDePagamentos();
                     break;
                 case "3":
-                    RHSystemUtils.solicitarFerias();
-                    break;
+                    MenuDemissão.MenuDE();
+                    break; 
                 case "4":
-                    RHSystemUtils.retornarAoTrabalho();
-                    break;
-                case "5":
-                    RHSystemUtils.demitirFuncionario();
-                    break;
-                case "6":
-                    RHSystemUtils.listarFuncionariosDemitidos();
-                    break;
-                case "7":
                     System.out.println("Saindo do sistema...");
-                    System.exit(0);
+                    System.exit(0); 
                     break;
+
                 default:
                     System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
-                    break;
+                    break;  
             }
         }
     }
@@ -50,13 +45,10 @@ public class RHSystem {
         System.out.println("█                                       █");
         System.out.println("█    !Sistema de Recursos Humanos!      █");
         System.out.println("█                                       █");
-        System.out.println("█     1. Admitir Funcionário            █");
-        System.out.println("█     2. Listar funcionários            █");
-        System.out.println("█     3. Solicitar férias               █");
-        System.out.println("█     4. Retornar ao trabalho           █");
-        System.out.println("█     5. Demitir Funcionário            █");
-        System.out.println("█     6. Listar funcionários demitidos  █");
-        System.out.println("█     7. Sair do Sistema                █");
+        System.out.println("█     1. Funcionarios                   █");
+        System.out.println("█     2. Folha de pagamento             █");
+        System.out.println("█     3. Demitir Funcionário            █");
+        System.out.println("█     4. Sair do Sistema                █");
         System.out.println("█                                       █");
         System.out.println("█    !Sistema de Recursos Humanos!      █");
         System.out.println("█                                       █");
