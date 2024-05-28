@@ -6,7 +6,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.List;
 
-public class Arquivo {
+public class Arquivo{
     public static boolean arquivoExiste(String arquivo) {
         return Files.exists(Path.of(arquivo));
     }

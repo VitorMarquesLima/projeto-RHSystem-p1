@@ -1,16 +1,8 @@
-Paulo primeiro
-Ser o primeiro
-1.0
-De Férias
-Segundinho
-Vice-presidente
-2.0
-Demitido
-Terceirão
-Gerente
-4000.0
+Vitor
+ADM
+2300.0
 Trabalhando
-jore
-joge
-90.0
+Iago
+CEO
+2000.0
 Trabalhando

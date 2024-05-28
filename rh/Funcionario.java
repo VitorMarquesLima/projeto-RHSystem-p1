@@ -9,7 +9,7 @@ public class Funcionario {
     double salario;
     String situacao; // Trabalhando, Férias ou Demitido
 
-    private static final String ARQUIVO = "funcionarios.txt";
+    private static final String ARQUIVO = "./rh/funcionarios.txt";
 
     public static final String FERIAS = "De Férias";
     public static final String TRABALHANDO = "Trabalhando";

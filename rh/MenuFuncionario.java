@@ -20,7 +20,7 @@ public class MenuFuncionario {
         System.out.println("█             !Funcionarios!            █");
         System.out.println("█                                       █");
         System.out.println("█████████████████████████████████████████");
-        System.out.println("                                       ");  
+        System.out.println("                                         ");  
 
         
         String menuFuncionario  = lerDados.lerTexto("Tente novamente");
