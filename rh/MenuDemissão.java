@@ -27,7 +27,7 @@ public class MenuDemissão{
             RHSystemUtils.demitirfuncionario();
             break;
             case "2":
-            RHSystemUtils.readmitirfuncionario();
+            RHSystemUtils.listarDemitidos();
             break;
             case "3":
             RHSystemUtils.readmitirfuncionario();

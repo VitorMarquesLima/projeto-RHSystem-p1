@@ -59,52 +59,6 @@ public class RHSystemUtils {
         salvarFuncionariosNoArquivo(todoMundo);
     }
 
-    // Método para retornar ao trabalho um funcionário que estava de férias.
-
-
-    /* // Método para demitir um funcionário.
-    public static void demitirFuncionario() {
-        var todoMundo = listarFuncionariosDoArquivo();
-        if (todoMundo.isEmpty()) {
-            System.out.println("Não há funcionários cadastrados para demitir.");
-            return;
-        }
-
-        // Loop para garantir uma entrada válida
-        System.out.print("Digite o número do funcionario que deseja demitir: ");
-        String input = lerDados.lerTexto("tente novamente");
-
-        // Verifica se a entrada é um número válido
-        if (input.trim().isEmpty() && input.matches("\\d+")) {
-            return;
-        }
-        int index = Integer.parseInt(input);
-
-        // Verifica se o número do funcionário está dentro do intervalo válido
-        if (index < 1 || index > todoMundo.size()) {
-            return;
-        }
-
-        // Demite o funcionário
-        Funcionario demitido = todoMundo.remove(index - 1);
-        funcionariosDemitidos.add(demitido);
-        System.out.println("Funcionário demitido com sucesso.");
-        salvarFuncionariosNoArquivo(todoMundo);
-    }
-
-    public static void listarFuncionariosDemitidos() {
-        if (funcionariosDemitidos.isEmpty()) {
-            System.out.println("Não há funcionarios demitidos.");
-        } else {
-            System.out.println("Lista de Funcionários demitidos:");
-            for (int i = 0; i < funcionariosDemitidos.size(); i++) {
-                Funcionario funcionario = funcionariosDemitidos.get(i);
-                System.out.println((i + 1) + ". NOME: " + funcionario.nome + ", CARGO: " + funcionario.cargo
-                        + ", Salario: R$" + funcionario.salario + ", Status: Demitido");
-            }
-        } \*
-    } */
-
     public static void FolhaDePagamentos() {
         var todoMundo = listarFuncionariosDoArquivo();
 
@@ -116,9 +70,13 @@ public class RHSystemUtils {
             System.out.println("O custo da folha de pagamento é: ");
             for (int i = 0; i < todoMundo.size(); i++) {
                 Funcionario funcionario = todoMundo.get(i);
-                System.out.println((i + 1) + " Nome: " + funcionario.nome + ", Salário: R$" + funcionario.salario);
 
-                custoTotal += funcionario.salario;
+                if (!funcionario.situacao.equals("Demitido")) {
+                System.out.println((i + 1) + " Nome: " + funcionario.nome + ", Salário: R$" + funcionario.salario);
+                custoTotal += funcionario.salario; 
+                 } else { System.out.println((i + 1) + " Nome: " + funcionario.nome + " foi demitido"); 
+
+                 }
             }
 
             System.out.println("o custo da folha de pagamento é: " + custoTotal );
@@ -159,4 +117,20 @@ public class RHSystemUtils {
         }
         salvarFuncionariosNoArquivo(todoMundo);
     }
+    public static void listarDemitidos() {
+        var todoMundo = listarFuncionariosDoArquivo();
+        if (todoMundo.isEmpty()) {
+            System.out.println("Não há funcionários cadastrados.");
+        } else {
+            System.out.println("Lista de funcionários:");
+            int i = 0;
+            for (Funcionario funcionario : todoMundo) {
+                if (funcionario.situacao.equals("Demitido"))
+                System.out.println((i + 1) + ". Nome: " + funcionario.nome + ", Cargo: " + funcionario.cargo
+                        + ", Salário: R$" + funcionario.salario + ", Status: " + funcionario.situacao);
+                i++;
+            }
+        }
+    }
+
 }
